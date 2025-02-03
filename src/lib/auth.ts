@@ -1,16 +1,19 @@
 import NextAuth from "next-auth"
 import authConfig from "./auth.config"
-import { PrismaAdapter } from "@auth/prisma-adapter"
-import { PrismaClient } from "@prisma/client"
 
-const prisma = new PrismaClient()
+import { SupabaseAdapter } from "@auth/supabase-adapter"
 
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  adapter: PrismaAdapter(prisma),
+  adapter: SupabaseAdapter({
+    url: process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    secret: process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  }),
   callbacks: {
     async jwt({ token, user }) {
+
       // Ajoute les données de l'utilisateur au token lors de la première connexion
+
       if (user) {
         token.id = user.id
         token.email = user.email

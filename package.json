@@ -4,13 +4,16 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "postinstall": "prisma generate",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.4",
+    "@auth/supabase-adapter": "^1.7.4",
     "@prisma/client": "^6.3.0",
+    "@supabase/supabase-js": "^2.48.1",
     "next": "15.1.6",
     "next-auth": "^5.0.0-beta.25",
     "prisma": "^6.3.0",
